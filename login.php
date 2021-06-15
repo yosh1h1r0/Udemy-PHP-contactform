@@ -5,6 +5,12 @@ session_start();
 
 header('X-FRAME-OPTIONS:DENY');
 
+if(!empty($_SESSION)){
+    echo '<pre>';
+    var_dump($_SESSION);
+    echo  '</pre>' ;
+}
+
 
 $pageFlag = 0;
 
@@ -38,7 +44,11 @@ function h($str)
 
 <?php if($pageFlag === 0 ) : ?>
 <?php
-echo bin2hex(random_bytes(32)); 
+if(!isset($_SESSION['csrfToken'])){
+$csrfToken = bin2hex(random_bytes(32)); 
+$_SESSION['csrfToken'] = $csrfToken;
+}
+$token = $_SESSION['csrfToken'];
     ?>
 <form method="POST" action="login.php" >
 メールアドレス
@@ -48,10 +58,12 @@ echo bin2hex(random_bytes(32));
 <input type="text" name="password" value="<?php if(!empty($_POST['password'])){echo h($_POST['password']);}?>">
 <br>
 <input type="submit" name="btn_confirm" value="確認する">
+<input type="hidden" name="csrf" value="<?php echo $token; ?>">
 </form>
 <?php endif;?>
 
 <?php if($pageFlag === 1 ) : ?>
+<?php if($_POST['csrf'] === $_SESSION['csrfToken']) :?>
     <form method="POST" action="login.php" >
 メールアドレス
 <?php echo h($_POST['email']); ?>
@@ -63,12 +75,18 @@ echo bin2hex(random_bytes(32));
 <input type="submit" name="btn_submit" value="送信する">
 <input type="hidden" name="email" value="<?php echo h($_POST['email']) ;?>">
 <input type="hidden" name="password" value="<?php echo h($_POST['password']) ;?>">
+<input type="hidden" name="csrf" value="<?php echo h($_POST['csrf']);?>">
 </form>
+<?php endif;?>
 <?php endif;?>
 
 
 <?php if($pageFlag === 2 ) : ?>
+    <?php if($_POST['csrf'] === $_SESSION['csrfToken']) :?>
 完了画面
+
+<?php unset($_SESSION['csrfToken']);?>
+<?php endif;?>
 <?php endif;?>
 
 </body>
