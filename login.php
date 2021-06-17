@@ -39,8 +39,13 @@ function h($str)
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
+<link rel ="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.css">
+<style>
+
+</style>
 </head>
 <body>
+
 
 <?php if($pageFlag === 0 ) : ?>
 <?php
@@ -52,8 +57,14 @@ $token = $_SESSION['csrfToken'];
     ?>
 
     <?php if(!empty($errors) && !empty($_POST['btn_confirm'])) : ?>
-    <?php ?>
-        <!-- ここからバリデーション-->
+        <?php echo '<ul>' ;?>
+        <?php
+            foreach($errors as $error) {
+                echo '<li>'.$error.'</li>' ;
+            } 
+            ?>
+       <?php echo '</ul>' ;?>
+        
     <?php endif ; ?>
 <form method="POST" action="login.php" >
 メールアドレス
@@ -63,7 +74,7 @@ $token = $_SESSION['csrfToken'];
 <input type="text" name="password" value="<?php if(!empty($_POST['password'])){echo h($_POST['password']);}?>">
 <br>
 ホームページ
-<input type="text" name="url" value="<?php if(!empty($_POST['url'])){echo h($_POST['url']);}?>">
+<input type="url" name="url" value="<?php if(!empty($_POST['url'])){echo h($_POST['url']);}?>">
 <br>
 性別
 <input type="radio" name="gender" value="0"
