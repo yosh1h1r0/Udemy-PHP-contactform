@@ -5,6 +5,7 @@ session_start();
 
 require 'validation.php';
 
+
 header('X-FRAME-OPTIONS:DENY');
 
 if(!empty($_POST)){
@@ -67,11 +68,11 @@ $token = $_SESSION['csrfToken'];
         
     <?php endif ; ?>
 <form method="POST" action="login.php" >
+お名前
+<input type="text" name="your_name" value="<?php if(!empty($_POST['your_name'])){echo h($_POST['your_name']);}?>">
+<br>
 メールアドレス
 <input type="email" name="email" value="<?php if(!empty($_POST['email'])){echo h($_POST['email']);}?>">
-<br>
-パスワード
-<input type="text" name="password" value="<?php if(!empty($_POST['password'])){echo h($_POST['password']);}?>">
 <br>
 ホームページ
 <input type="url" name="url" value="<?php if(!empty($_POST['url'])){echo h($_POST['url']);}?>">
@@ -133,11 +134,11 @@ $token = $_SESSION['csrfToken'];
 <!--入力した確認画面-->
 <?php if($_POST['csrf'] === $_SESSION['csrfToken']) :?>
     <form method="POST" action="login.php" >
-メールアドレス
-<?php echo h($_POST['email']); ?>
+お名前
+<?php echo h($_POST['your_name']); ?>
 <br>
-パスワード
-<?php echo h($_POST['password']);?>
+メールアドレス
+<?php echo h($_POST['email']);?>
 <br>
 ホームページ
 <?php echo h($_POST['url']);?>
@@ -160,8 +161,8 @@ elseif(  $_POST['age'] === '6'){echo '60歳~';}
 
 <input type="submit" name="back" value="戻る">
 <input type="submit" name="btn_submit" value="送信する">
+<input type="hidden" name="your_name" value="<?php echo h($_POST['your_name']) ;?>">
 <input type="hidden" name="email" value="<?php echo h($_POST['email']) ;?>">
-<input type="hidden" name="password" value="<?php echo h($_POST['password']) ;?>">
 <input type="hidden" name="url" value="<?php echo h($_POST['url']) ;?>">
 <input type="hidden" name="gender" value="<?php echo h($_POST['gender']) ;?>">
 <input type="hidden" name="age" value="<?php echo h($_POST['age']) ;?>">
