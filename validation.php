@@ -4,6 +4,10 @@ function validation($request){
 
  $errors = [];
 
+if(empty($request['your_name']) || 20 <mb_strlen($request['your_name'])){
+    $errors[] = '「お名前」を入力して下さい。入力文字は20文字以内です';
+}
+
  if(empty($request['email']) || !filter_var($request, FILTER_VALIDATE_EMAIL)){
      $errors[] = '「メールアドレス」の入力をして下さい';
  } 
@@ -12,10 +16,6 @@ function validation($request){
      if(!filter_var($request['url'], FILTER_VALIDATE_URL))
      $errors[] = '「ホームページ」は正しいURLを入力して下さい';
  }
-
- if(empty($request['password']) || 8 <mb_strlen($request['password'])){
-    $errors[] = '「8文字以上のパスワード」を入力して下さい';
-}
 
 if(!isset($request['gender'])){
     $errors[] = '「性別」を選択して下さい';
