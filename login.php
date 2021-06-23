@@ -176,6 +176,12 @@ elseif(  $_POST['age'] === '6'){echo '60歳~';}
 <?php if($pageFlag === 2 ) : ?>
 <!--送信完了画面-->
     <?php if($_POST['csrf'] === $_SESSION['csrfToken']) :?>
+
+<?php require './mainte/insert.php'; 
+
+insertContact($_POST);
+
+?>
 完了画面
 
 <?php unset($_SESSION['csrfToken']);?>
