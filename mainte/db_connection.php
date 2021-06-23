@@ -1,10 +1,10 @@
 <?php
 
 const DB_HOST = 'mysql:dbname=contact_test;host=localhost;charset=utf8';
-const DB_USER = 'contacts';
+const DB_USER = 'yoshi';
 const DB_PASSWORD = 'yotti1192';
 
-
+//変更する
 $pdo = new PDO(DB_HOST,DB_USER,DB_PASSWORD);
 
 
