@@ -8,7 +8,7 @@ if(empty($request['your_name']) || 20 <mb_strlen($request['your_name'])){
     $errors[] = '「お名前」を入力して下さい。入力文字は20文字以内です';
 }
 
- if(empty($request['email']) || !filter_var($request, FILTER_VALIDATE_EMAIL)){
+ if(empty($request['email']) || !filter_var($request['email'], FILTER_VALIDATE_EMAIL)){
      $errors[] = '「メールアドレス」の入力をして下さい';
  } 
 
